@@ -1,10 +1,13 @@
 import argparse
+import time
+from typing import Dict, List
+
+# image
 import cv2
 import face_recognition
 from PIL import Image
 import numpy as np
-import matplotlib.pyplot as plt
-from typing import Dict, List
+#import matplotlib.pyplot as plt
 
 '''
 # face detector
@@ -101,7 +104,7 @@ def predict(img, ref_position: Dict[str, int] = None):
     padding_x = int(face_weight * 0.1)
     padding_y = int(face_height * 0.1)
     face = frame[max(0, face_location[0] - padding_y): min(frame.shape[0], face_location[2] + padding_y),
-                max(0, face_location[3] - padding_x): min(frame.shape[1], face_location[1] + padding_x)]
+                 max(0, face_location[3] - padding_x): min(frame.shape[1], face_location[1] + padding_x)]
 
     '''
     # show image
@@ -115,8 +118,15 @@ def predict(img, ref_position: Dict[str, int] = None):
     age_net.setInput(blob)
     predictions = age_net.forward()
     age = age_list[predictions[0].argmax()]
+    confidence = predictions[0].max()
 
-    return age
+    return {'type': age,
+            'confidence': confidence,
+            'position_top': face_location[0],
+            'position_right': face_location[1],
+            'position_bottom': face_location[2],
+            'position_left': face_location[3],
+            'time': int(time.time())}
 
 
 def main():
