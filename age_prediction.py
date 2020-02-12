@@ -118,7 +118,7 @@ def predict(img, ref_position: Dict[str, int] = None):
     age_net.setInput(blob)
     predictions = age_net.forward()
     age = age_list[predictions[0].argmax()]
-    confidence = predictions[0].max()
+    confidence = predictions[0].max().item()
 
     return {'type': age,
             'confidence': confidence,
