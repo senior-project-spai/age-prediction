@@ -68,6 +68,8 @@ def main():
         # Response
         age_result = {'face_image_id': input_json['face_image_id'],
                       'type': prediction['type'],
+                      'min_age': prediction['min_age'],
+                      'max_age': prediction['max_age'],
                       'confidence': prediction['confidence'],
                       'position_top': prediction['position_top'],
                       'position_right': prediction['position_right'],

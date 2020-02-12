@@ -20,8 +20,14 @@ FACE_MIN_CONFIDENCE = 0.7
 age_net = cv2.dnn.readNet('models/age_deploy.prototxt',
                           'models/age_net.caffemodel')
 MODEL_MEAN_VALUES = (78.4263377603, 87.7689143744, 114.895847746)
-age_list = ['(0-2)', '(4-6)', '(8-12)', '(15-20)',
-            '(25-32)', '(38-43)', '(48-53)', '(60-100)']
+age_list = [{'min': 0, 'max': 2},
+            {'min': 4, 'max': 6},
+            {'min': 8, 'max': 12},
+            {'min': 15, 'max': 20},
+            {'min': 25, 'max': 32},
+            {'min': 38, 'max': 43},
+            {'min': 48, 'max': 53},
+            {'min': 60, 'max': 100}]
 
 
 def load_image_file(file):
@@ -120,7 +126,8 @@ def predict(img, ref_position: Dict[str, int] = None):
     age = age_list[predictions[0].argmax()]
     confidence = predictions[0].max().item()
 
-    return {'type': age,
+    return {'min_age': age['min'],
+            'max_age': age['max'],
             'confidence': confidence,
             'position_top': face_location[0],
             'position_right': face_location[1],
