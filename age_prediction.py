@@ -133,7 +133,7 @@ def predict(img, ref_position: Dict[str, int] = None):
             'position_right': face_location[1],
             'position_bottom': face_location[2],
             'position_left': face_location[3],
-            'time': int(time.time())}
+            'time': int(round(time.time() * 1000))}
 
 
 def main():
