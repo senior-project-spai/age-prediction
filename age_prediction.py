@@ -102,7 +102,14 @@ def predict(img, ref_position: Dict[str, int] = None):
         face_location = face_locations[0]
     else:
         print('No face detected')
-        return
+        return {'min_age': None,
+                'max_age': None,
+                'confidence': None,
+                'position_top': None,
+                'position_right': None,
+                'position_bottom': None,
+                'position_left': None,
+                'time': int(round(time.time() * 1000))}
 
     # padding
     face_height = face_location[2] - face_location[0]
