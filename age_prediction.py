@@ -110,7 +110,7 @@ def predict(img, ref_position: Dict[str, int] = None):
                 'position_right': None,
                 'position_bottom': None,
                 'position_left': None,
-                'time': int(round(time.time() * 1000))}
+                'time': int(round(time.time() * 1000)) / 1000}
 
     # padding
     face_height = face_location[2] - face_location[0]
@@ -141,7 +141,7 @@ def predict(img, ref_position: Dict[str, int] = None):
             'position_right': face_location[1],
             'position_bottom': face_location[2],
             'position_left': face_location[3],
-            'time': int(round(time.time() * 1000))}
+            'time': int(round(time.time() * 1000)) / 1000}
 
 
 def main():
