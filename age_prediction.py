@@ -5,7 +5,7 @@ from typing import Dict, List
 # image
 import cv2
 import face_recognition
-from PIL import Image
+from PIL import Image, ImageOps
 import numpy as np
 #import matplotlib.pyplot as plt
 
@@ -34,6 +34,7 @@ def load_image_file(file):
     """load image into numpy array (RGB)"""
     im = Image.open(file)
     im = im.convert('RGB')
+    im = ImageOps.exif_transpose(im)
     return np.array(im)
 
 
