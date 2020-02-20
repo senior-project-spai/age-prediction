@@ -36,6 +36,7 @@ def main():
                              bootstrap_servers=[
                                  '{}:{}'.format(KAFKA_HOST, KAFKA_PORT)],
                              auto_offset_reset='earliest',
+                             enable_auto_commit=True,
                              group_id='age-prediction-group')
 
     producer = KafkaProducer(
@@ -80,7 +81,6 @@ def main():
         # Send to Kafka
         producer.send(KAFKA_TOPIC_AGE_RESULT,
                       value=dumps(age_result).encode('utf-8'))
-        consumer.commit()
 
 if __name__ == '__main__':
     main()
