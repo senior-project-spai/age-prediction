@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: age-prediction
+  name: age-prediction
+spec:
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+        app: age-prediction
+  template:
+    metadata:
+      labels:
+        app: age-prediction
+    spec:
+      containers:
+        - env:
+            - name: KAFKA_TOPIC_FACE_IMAGE
+              valueFrom:
+                configMapKeyRef:
+                  key: KAFKA_TOPIC_FACE_IMAGE_INPUT
+                  name: kafka-topic
+            - name: KAFKA_TOPIC_AGE_RESULT
+              valueFrom:
+                configMapKeyRef:
+                  key: KAFKA_TOPIC_FACE_RESULT_AGE
+                  name: kafka-topic
+          envFrom:
+            - configMapRef:
+                name: kafka-endpoint
+            - configMapRef:
+                name: s3-endpoint
+            - configMapRef:
+                name: s3-key
+          image: supakornbabe/spai-age-prediction:dev-73baab3
+          imagePullPolicy: Always
+          name: age-prediction
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
